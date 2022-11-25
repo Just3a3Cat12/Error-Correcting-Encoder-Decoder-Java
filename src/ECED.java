@@ -38,7 +38,7 @@ public class ECED {
                 }
                 break;
             case "decode":
-                File inputFile4 = new File("encoded.txt");
+                File inputFile4 = new File("received.txt");
 //                BinaryDecode binaryDecode = new BinaryDecode(inputFile4);
 //                binaryDecode.biDeco();
                 HammingEncodeDecode hammingEncodeDecode1 = new HammingEncodeDecode(inputFile4);
@@ -176,11 +176,13 @@ class HammingEncodeDecode {
                 badBit += 4;
             }
 
+            System.out.println("badBit : " + badBit);
+
             if (badBit != 0) {
-                if (binaryArr[badBit - 1] == 0) {
-                    binaryArr[badBit - 1] = 1;
+                if (binaryArr[(i + badBit) - 1] == 0) {
+                    binaryArr[(i + badBit) - 1] = 1;
                 } else {
-                    binaryArr[badBit - 1] = 0;
+                    binaryArr[(i + badBit) - 1] = 0;
                 }
             }
             hamDeco.add(binaryArr[i + 2]);
@@ -188,6 +190,8 @@ class HammingEncodeDecode {
             hamDeco.add(binaryArr[i + 5]);
             hamDeco.add(binaryArr[i + 6]);
         }
+
+        System.out.println("Modified : " + Arrays.toString(binaryArr).replace(",", ""));
 
         List<String> inBinary = new ArrayList<>();
         for (int i = 0; i < hamDeco.size(); i += 8) {
@@ -232,6 +236,7 @@ class BitLevelErrEmu {
             for (int i = 0; i < bytes.length; i++) {
                 bytes[i] ^= 1<< random.nextInt(7); // Changing random bit of bytes variable.
             }
+            System.out.println(Arrays.toString(bytes));
             return bytes;
         } catch (Exception e) {
             System.out.println(e.getMessage());
